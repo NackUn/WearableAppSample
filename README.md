@@ -1,1 +1,1 @@
-# WearableAppSample-
+# WearableAppSample
