@@ -1,11 +1,9 @@
 package com.nackun.wearableappsample
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +17,13 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.nackun.wearableappsample.theme.WearableAppSampleTheme
 
-class MainActivity : ComponentActivity() {
+class NextActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            WearApp("Android")
+            WearApp("Next")
         }
     }
 
@@ -48,10 +46,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Greeting(greetingName: String) {
         Text(
-            modifier = Modifier.fillMaxWidth()
-                .clickable {
-                           startActivity(Intent(this, NextActivity::class.java))
-                },
+            modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.primary,
             text = stringResource(R.string.hello_world, greetingName)
