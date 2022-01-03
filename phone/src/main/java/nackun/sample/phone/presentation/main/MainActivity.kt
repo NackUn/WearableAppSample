@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
 
     private val nodeClient by lazy { Wearable.getNodeClient(this) }
     private val messageClient by lazy { Wearable.getMessageClient(this) }
+    private val dataClient by lazy { Wearable.getDataClient(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,8 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             mainViewModel.buttonClickEvent.collect {
                 Timber.d("mainViewModel.buttonClickEvent.collect")
-                startWearableActivity()
+//                startWearableActivity()
+                sendData()
             }
         }
     }
@@ -64,8 +67,32 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun sendData() {
+        lifecycleScope.launch {
+            try {
+                val request = PutDataMapRequest.create(COUNT_PATH).apply {
+                    dataMap.putDouble(TIME_KEY, 0.1)
+                    dataMap.putDouble(TIME_KEY_2, 0.2)
+                }
+                    .asPutDataRequest()
+                    .setUrgent()
+
+                val result = dataClient.putDataItem(request).await()
+
+                Timber.d("DataItem saved: $result")
+            } catch (cancellationException: CancellationException) {
+                throw cancellationException
+            } catch (exception: Exception) {
+                Timber.d("Saving DataItem failed: $exception")
+            }
+        }
+    }
+
     companion object {
         private const val START_ACTIVITY_PATH = "/start-activity"
+        private const val COUNT_PATH = "/count"
+        private const val TIME_KEY = "time"
+        private const val TIME_KEY_2 = "time2"
     }
 }
 
