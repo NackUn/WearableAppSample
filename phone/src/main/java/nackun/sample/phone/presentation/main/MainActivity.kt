@@ -13,7 +13,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import nackun.sample.phone.ui.theme.WearableAppSampleTheme
+import nackun.sample.phone.presentation.ui.theme.WearableAppSampleTheme
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {

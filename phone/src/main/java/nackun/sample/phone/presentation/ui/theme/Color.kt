@@ -1,4 +1,4 @@
-package nackun.sample.phone.ui.theme
+package nackun.sample.phone.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
